@@ -2,71 +2,132 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hassan & Laiba Engagement</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Together Forever — Hassan & Laiba</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#0b0b0b;color:#fff}
-#welcome{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(135deg,#000,#1a1a1a)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Poppins,sans-serif;background:#faf7f0;color:#222}
+.hero{height:100vh;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=80') center/cover;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff}
+.hero h1{font-family:Cinzel,serif;font-size:70px}
+.hero p{font-size:22px;margin:15px 0}
+.btn{padding:15px 35px;background:gold;color:#000;text-decoration:none;border-radius:40px;font-weight:700}
+.section{padding:90px 20px;max-width:1100px;margin:auto}
+.title{font-family:Cinzel,serif;font-size:42px;text-align:center;color:#b8860b;margin-bottom:30px}
+.card{background:#fff;border-radius:20px;padding:30px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.countdown{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.box{background:#fff;border:2px solid #d4af37;border-radius:18px;padding:20px;min-width:120px;text-align:center}
+.num{font-size:42px;color:#b8860b;font-weight:700}
+.details{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.detail{background:white;padding:25px;border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.08)}
+.detail h3{color:#b8860b}
+footer{background:#111;color:#fff;text-align:center;padding:60px 20px}
+.gate{height:100vh;background:#111;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white}
 .gates{display:flex}
-.gate{width:140px;height:280px;background:linear-gradient(#f5d76e,#a57c00);border:4px solid #ffd700;transition:1.8s}
+.door{width:170px;height:320px;background:linear-gradient(#fff4c2,#d4af37);border:5px solid gold;transition:2s}
 .left{transform-origin:left}
 .right{transform-origin:right}
 .open .left{transform:rotateY(-110deg)}
 .open .right{transform:rotateY(110deg)}
-button{padding:14px 30px;border:none;border-radius:30px;background:#d4af37;font-weight:bold;cursor:pointer;margin-top:20px}
-#main{display:none;padding:40px;text-align:center}
-h1{font-size:56px;color:#d4af37}
-.card{max-width:800px;margin:auto;padding:25px;border:1px solid #d4af37;border-radius:18px;background:#151515}
-.countdown{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:20px}
-.box{padding:15px;background:#222;border-radius:12px;min-width:90px}
-.num{font-size:28px;color:#ffd700;font-weight:bold}
+button{margin-top:25px;padding:15px 30px;border:none;border-radius:30px;background:gold;font-weight:bold;cursor:pointer}
+#site{display:none}
+@media(max-width:768px){.hero h1{font-size:42px}}
 </style>
 </head>
 <body>
-<section id="welcome">
-<h2>You Are Invited</h2>
-<div id="gate" class="gates">
-<div class="gate left"></div>
-<div class="gate right"></div>
+
+<section class="gate" id="intro">
+<h2 style="font-family:Cinzel,serif;margin-bottom:20px">Royal Engagement Invitation</h2>
+<div class="gates" id="gates">
+<div class="door left"></div>
+<div class="door right"></div>
 </div>
-<button onclick="openInvitation()">Open Invitation</button>
+<button onclick="openInvite()">Open Invitation</button>
 </section>
 
-<section id="main">
-<h1>HASSAN & LAIBA</h1>
-<h2>Engagement Ceremony</h2>
-<div class="card">
-<p>Join us for a memorable evening as we celebrate our engagement.</p>
-<p><b>Date:</b> 15 July 2027</p>
-<p><b>Time:</b> 7:00 PM</p>
-<p><b>Venue:</b> FARM HOUSE</p>
-<p><b>Hosted By:</b> Hamza Ahmed & Raza Ahmed</p>
+<div id="site">
+<section class="hero">
+<div>
+<h1>Together Forever</h1>
+<p>Hassan & Laiba</p>
+<a href="#countdown" class="btn">Explore Invitation</a>
+</div>
+</section>
 
+<section class="section" id="countdown">
+<h2 class="title">Countdown To Our Special Day</h2>
 <div class="countdown">
-<div class="box"><div class="num" id="days">0</div>Days</div>
-<div class="box"><div class="num" id="hours">0</div>Hours</div>
-<div class="box"><div class="num" id="minutes">0</div>Minutes</div>
-<div class="box"><div class="num" id="seconds">0</div>Seconds</div>
-</div>
+<div class="box"><div class="num" id="d">0</div>Days</div>
+<div class="box"><div class="num" id="h">0</div>Hours</div>
+<div class="box"><div class="num" id="m">0</div>Minutes</div>
+<div class="box"><div class="num" id="s">0</div>Seconds</div>
 </div>
 </section>
+
+<section class="section">
+<h2 class="title">A Beautiful Beginning</h2>
+<div class="card">
+<p style="text-align:center;font-size:18px;line-height:1.8">
+With the blessings of our families, we warmly invite you to celebrate the engagement of Hassan and Laiba. Your presence will make our special day even more memorable.
+</p>
+</div>
+</section>
+
+<section class="section">
+<h2 class="title">Event Details</h2>
+<div class="details">
+<div class="detail"><h3>Date</h3><p>15 July 2027</p></div>
+<div class="detail"><h3>Time</h3><p>7:00 PM</p></div>
+<div class="detail"><h3>Venue</h3><p>Farm House</p></div>
+<div class="detail"><h3>Event</h3><p>Engagement Ceremony</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2 class="title">Hosted By</h2>
+<div class="card" style="text-align:center">
+<h3>Hamza Ahmed</h3>
+<br>
+<h3>Raza Ahmed</h3>
+</div>
+</section>
+
+<section class="section">
+<h2 class="title">Our Journey Begins</h2>
+<div class="card">
+<p style="line-height:1.9;text-align:center">
+A new chapter starts with love, trust, and togetherness. We look forward to sharing this joyful celebration with our cherished family and friends.
+</p>
+</div>
+</section>
+
+<footer>
+<h2 style="font-family:Cinzel,serif">Hassan & Laiba</h2>
+<p>Thank You For Being Part Of Our Special Day</p>
+</footer>
+</div>
+
+<audio id="music" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-function openInvitation(){
-document.getElementById('gate').classList.add('open');
+function openInvite(){
+document.getElementById('gates').classList.add('open');
+document.getElementById('music').play();
 setTimeout(()=>{
-document.getElementById('welcome').style.display='none';
-document.getElementById('main').style.display='block';
-},1800);
+document.getElementById('intro').style.display='none';
+document.getElementById('site').style.display='block';
+},2000);
 }
 const target=new Date("July 15, 2027 19:00:00").getTime();
 setInterval(()=>{
-let now=new Date().getTime();
-let d=target-now;
-document.getElementById('days').innerHTML=Math.floor(d/(1000*60*60*24));
-document.getElementById('hours').innerHTML=Math.floor((d%(1000*60*60*24))/(1000*60*60));
-document.getElementById('minutes').innerHTML=Math.floor((d%(1000*60*60))/(1000*60));
-document.getElementById('seconds').innerHTML=Math.floor((d%(1000*60))/1000);
+let now=new Date().getTime(),x=target-now;
+d.innerHTML=Math.floor(x/86400000);
+h.innerHTML=Math.floor((x%86400000)/3600000);
+m.innerHTML=Math.floor((x%3600000)/60000);
+s.innerHTML=Math.floor((x%60000)/1000);
 },1000);
 </script>
 </body>
