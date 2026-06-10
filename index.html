@@ -359,6 +359,35 @@ body { font-family:'Lato',sans-serif; background:#fdf0f5; color:var(--text); ove
 /* FIREWORKS */
 #fireworks-canvas { position:fixed; inset:0; pointer-events:none; z-index:999; }
 
+/* MUSIC BUTTON */
+#music-btn {
+  position:fixed; bottom:1.5rem; right:1.5rem; z-index:998;
+  width:56px; height:56px; border-radius:50%;
+  background:linear-gradient(135deg,#c9547a,#a83d63);
+  border:none; cursor:pointer; box-shadow:0 4px 20px rgba(201,84,122,0.45);
+  display:none; align-items:center; justify-content:center;
+  font-size:1.4rem; transition:transform 0.2s,box-shadow 0.2s;
+  animation:musicPulse 2s ease-in-out infinite;
+}
+#music-btn.show { display:flex; }
+#music-btn:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(201,84,122,0.6); }
+@keyframes musicPulse {
+  0%,100%{ box-shadow:0 4px 20px rgba(201,84,122,0.45),0 0 0 0 rgba(201,84,122,0.3); }
+  50%    { box-shadow:0 4px 20px rgba(201,84,122,0.45),0 0 0 14px rgba(201,84,122,0); }
+}
+#music-btn.playing { background:linear-gradient(135deg,#c9a96e,#b8843a); }
+#sc-player { position:fixed; bottom:-500px; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none; }
+.music-tooltip {
+  position:fixed; bottom:4.8rem; right:1.2rem; z-index:997;
+  background:rgba(61,26,43,0.92); color:#fff;
+  font-family:"Lato",sans-serif; font-size:0.75rem; font-weight:300;
+  padding:0.4rem 0.8rem; border-radius:20px; white-space:nowrap;
+  letter-spacing:0.05em; pointer-events:none;
+  opacity:0; transform:translateY(6px);
+  transition:opacity 0.3s,transform 0.3s;
+}
+.music-tooltip.show { opacity:1; transform:translateY(0); }
+
 /* REVEAL */
 .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease,transform 0.7s ease; }
 .reveal.visible { opacity:1; transform:translateY(0); }
@@ -804,7 +833,61 @@ function initFireworks(){
     },{threshold:0.4}).observe(namesSec);
   }
   initReveal();
+  setTimeout(initMusic, 600);
 }
+
+/* ══════════ MUSIC ══════════ */
+let musicPlaying = false;
+let scWidget = null;
+
+function initMusic() {
+  const btn = document.getElementById('music-btn');
+  if (btn) btn.classList.add('show');
+  const tt = document.getElementById('music-tooltip');
+  if (tt) {
+    setTimeout(() => tt.classList.add('show'), 900);
+    setTimeout(() => tt.classList.remove('show'), 4500);
+  }
+  const iframe = document.getElementById('sc-player');
+  if (window.SC && iframe) {
+    scWidget = SC.Widget(iframe);
+  }
+}
+
+function toggleMusic() {
+  const btn = document.getElementById('music-btn');
+  const iframe = document.getElementById('sc-player');
+  if (!musicPlaying) {
+    if (scWidget) {
+      scWidget.play();
+    } else if (iframe) {
+      iframe.src = iframe.src.replace('auto_play=false', 'auto_play=true');
+    }
+    if (btn) { btn.textContent = '🎶'; btn.classList.add('playing'); }
+    musicPlaying = true;
+  } else {
+    if (scWidget) {
+      scWidget.pause();
+    } else if (iframe) {
+      iframe.src = iframe.src.replace('auto_play=true', 'auto_play=false');
+    }
+    if (btn) { btn.textContent = '🎵'; btn.classList.remove('playing'); }
+    musicPlaying = false;
+  }
+}
+
+// initMusic called from initFireworks below
+
 </script>
+
+<!-- MUSIC BUTTON -->
+<button id="music-btn" onclick="toggleMusic()" title="Play music">🎵</button>
+<div class="music-tooltip" id="music-tooltip">Zara Sa — tap to play 🎶</div>
+<iframe id="sc-player"
+  src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/bollywoodinstrumentals/zara-sa-rain-lofi&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false"
+  allow="autoplay">
+</iframe>
+
+<script src="https://w.soundcloud.com/player/api.js"></script>
 </body>
 </html>
