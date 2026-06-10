@@ -358,6 +358,155 @@
     .message-card { padding: 2rem 1.5rem; }
     .heart-card { max-width: 100%; }
   }
+
+  /* ── LOVE LETTER ── */
+  .letter-section {
+    padding: 5rem 2rem;
+    background: linear-gradient(160deg, #fff8fb 0%, #fffbf2 100%);
+    text-align: center;
+  }
+
+  .lock-box {
+    max-width: 380px;
+    margin: 0 auto 2rem;
+    background: #fff;
+    border: 1px solid rgba(201,84,122,0.15);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 8px 40px rgba(201,84,122,0.07);
+  }
+
+  .lock-icon { font-size: 3rem; margin-bottom: 0.75rem; animation: pulse 2s ease-in-out infinite; }
+
+  .lock-hint {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .password-input-wrap {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .password-input-wrap input {
+    border: 1px solid rgba(201,84,122,0.3);
+    border-radius: 50px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    outline: none;
+    font-family: 'Lato', sans-serif;
+    color: var(--text);
+    width: 160px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    transition: border-color 0.2s;
+  }
+
+  .password-input-wrap input:focus { border-color: var(--rose); }
+
+  .password-input-wrap button {
+    background: var(--rose);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.6rem 1.3rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .password-input-wrap button:hover { background: #b0425f; transform: scale(1.03); }
+
+  /* Letter */
+  .letter-wrap { display: none; max-width: 640px; margin: 0 auto; }
+  .letter-wrap.open { display: block; animation: fadeUp 0.7s ease; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+
+  .letter-card {
+    background: #fff;
+    border: 1px solid rgba(201,84,122,0.12);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 12px 50px rgba(201,84,122,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .letter-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rose), var(--gold), var(--rose));
+  }
+
+  .letter-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .letter-header h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: var(--rose);
+  }
+
+  .letter-rose { font-size: 1.3rem; }
+
+  .letter-body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text);
+    text-align: left;
+  }
+
+  .letter-body p { margin-bottom: 1.1rem; }
+  .letter-body p:first-child {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--deep);
+    font-weight: 600;
+  }
+
+  .letter-arabic {
+    font-size: 1.1rem;
+    color: var(--rose);
+    direction: rtl;
+    text-align: right;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--rose-pale);
+    border-radius: 12px;
+    line-height: 2;
+  }
+
+  .letter-sign {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rose-light);
+    font-style: italic;
+    color: var(--text-light);
+    text-align: right !important;
+  }
+
+  .letter-sign strong { color: var(--rose); font-style: normal; }
+
+  @media (max-width: 480px) {
+    .letter-card { padding: 2rem 1.5rem; }
+    .password-input-wrap { flex-direction: column; align-items: center; }
+    .password-input-wrap input { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -533,6 +682,49 @@
 </section>
 
 <!-- ══════════════════════════════════════════
+     LOVE LETTER
+══════════════════════════════════════════ -->
+<section class="letter-section">
+  <p class="section-eyebrow" style="color:var(--gold);">Something special</p>
+  <h2 class="section-title" style="font-family:'Playfair Display',serif; color:var(--deep); font-size:clamp(1.6rem,4vw,2.4rem); margin-bottom:0.5rem;">A Secret Letter For You 💌</h2>
+  <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:2rem; font-weight:300;">Enter the password to unlock your letter</p>
+
+  <!-- Lock Box -->
+  <div class="lock-box" id="lockBox">
+    <div class="lock-icon">🔐</div>
+    <p class="lock-hint">Only you know this... 🌙</p>
+    <div class="password-input-wrap">
+      <input type="password" id="pwInput" placeholder="Enter password" maxlength="20" />
+      <button onclick="checkPassword()">Open 💕</button>
+    </div>
+    <p id="pwError" style="color:#c9547a; font-size:0.85rem; margin-top:0.75rem; display:none;">Wrong password, try again 💔</p>
+  </div>
+
+  <!-- Letter (hidden until unlocked) -->
+  <div class="letter-wrap" id="letterWrap">
+    <div class="letter-card">
+      <div class="letter-header">
+        <span class="letter-rose">🌹</span>
+        <h3>My Dearest Laiba,</h3>
+        <span class="letter-rose">🌹</span>
+      </div>
+      <div class="letter-body">
+        <p>Happy Born Day My Forever Person ♥️🫂✨</p>
+        <p>There are things I feel so deeply that words almost feel too small — but I want to try, because you deserve to hear them.</p>
+        <p>You are not just someone I love. You are the person who made me believe that real, pure, beautiful connections still exist in this world. Every time I think of you, something in my chest gets warm — like a candle that never goes out.</p>
+        <p>Distance is hard. Some days it feels unbearable. But even from far away, you fill my days with meaning. Knowing you exist, knowing you are mine — that alone is enough to make me smile.</p>
+        <p>You are my partner, my best friend, my home. And no matter where life takes us, I will always choose you — again and again and again.</p>
+        <p>I pray every single day that Allah keeps you safe, happy, and blessed. I pray He writes your name next to mine — in this life and the next.</p>
+        <div class="letter-arabic">
+          اللهم احفظها لي وبارك لي فيها واجعلها من نصيبي دائمًا 🤲❤️
+        </div>
+        <p class="letter-sign">Forever yours,<br><strong>Hasba</strong> 💕</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════ -->
 <footer class="footer">
@@ -542,7 +734,33 @@
 </footer>
 
 <script>
-// ── FALLING PETALS ──
+// ── LOVE LETTER PASSWORD ──
+function checkPassword() {
+  const input = document.getElementById('pwInput').value.trim();
+  const error = document.getElementById('pwError');
+  if (input === '1120') {
+    document.getElementById('lockBox').style.display = 'none';
+    const lw = document.getElementById('letterWrap');
+    lw.classList.add('open');
+    // fireworks celebration
+    for (let i = 0; i < 6; i++) setTimeout(launchFirework, i * 250);
+  } else {
+    error.style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').style.borderColor = '#c9547a';
+    setTimeout(() => {
+      error.style.display = 'none';
+      document.getElementById('pwInput').style.borderColor = '';
+    }, 2000);
+  }
+}
+
+// Allow Enter key
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+
+
 (function() {
   const container = document.getElementById('petals');
   const colors = ['#f7c5d8','#fad4e5','#f5b8cf','#fde8f0','#fdc9a4','#fce4b8'];
